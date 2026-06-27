@@ -25,6 +25,48 @@ pipeline {
             }
         }
 
+        stage('Terraform Init') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform validate'
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                dir('terraform') {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+
+        stage('Configure EKS') {
+            steps {
+                sh '''
+                aws eks update-kubeconfig \
+                --region us-east-1 \
+                --name angular-eks
+                '''
+            }
+        }
+
         stage('Docker Build') {
             steps {
                 sh 'docker build -t angular-app:${BUILD_NUMBER} .'
