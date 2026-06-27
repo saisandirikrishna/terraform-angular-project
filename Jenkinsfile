@@ -52,29 +52,29 @@ pipeline {
     }
 }
 
-//     stage('Debug EKS') {
-//         steps {
-//             sh '''
-//             export KUBECONFIG=/var/lib/jenkins/.kube/config
+    stage('Debug EKS') {
+        steps {
+            sh '''
+            export KUBECONFIG=/var/lib/jenkins/.kube/config
 
-//             whoami
-//             pwd
-//             kubectl config current-context
-//             kubectl get nodes
-//             '''
-//         }
-//     }
+            whoami
+            pwd
+            kubectl config current-context
+            kubectl get nodes
+            '''
+        }
+    }
 
-// stage('Deploy To EKS') {
-//     steps {
-//         sh '''
-//         export KUBECONFIG=/var/lib/jenkins/.kube/config
+stage('Deploy To EKS') {
+    steps {
+        sh '''
+        export KUBECONFIG=/var/lib/jenkins/.kube/config
 
-//         kubectl apply -f k8s/
-//         kubectl rollout restart deployment/angular-app
-//         kubectl rollout status deployment/angular-app
-//         '''
-//     }
-// }
+        kubectl apply -f k8s/
+        kubectl rollout restart deployment/angular-app
+        kubectl rollout status deployment/angular-app
+        '''
+    }
+}
     }
 }
